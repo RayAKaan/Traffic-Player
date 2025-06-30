@@ -1,0 +1,37 @@
+# Core
+numpy
+pandas
+matplotlib
+opencv-python  # use opencv-python-headless in Docker/CI if needed
+scikit-learn
+loguru
+
+# Deep Learning
+torch
+torchvision
+torchaudio
+
+# Object Detection (YOLOv8)
+ultralytics
+
+# FastAPI & ASGI Server
+fastapi
+uvicorn[standard]
+python-multipart
+aiofiles
+
+# Database
+sqlalchemy
+sqlmodel
+
+# Env Config
+python-dotenv
+
+# Request validation
+pydantic
+
+# Utilities
+requests
+
+# Experiment Tracking
+mlflow

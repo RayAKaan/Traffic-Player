@@ -1,0 +1,13 @@
+# Formatting & Linting
+black
+isort
+flake8
+
+# Testing
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+
+# Type checking (optional)
+mypy

@@ -1,0 +1,31 @@
+# Ignore virtual environments and system files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.log
+
+# Python environment files
+.venv/
+env/
+venv/
+
+# VSCode config
+.vscode/
+
+# Node modules (safe to ignore, can be reinstalled)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Byte-compiled
+*.db
+*.sqlite3
+
+# Output folders
+data/raw/*
+data/processed/*
+
+# Ignore MLflow logs (optional)
+mlruns/
