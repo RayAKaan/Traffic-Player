@@ -1,0 +1,56 @@
+# Auto normalize all text files to LF in repo, convert to CRLF on Windows
+* text=auto
+
+# Force LF endings for code files (important for CI/CD & Docker)
+*.sh     text eol=lf
+*.py     text eol=lf
+*.ts     text eol=lf
+*.tsx    text eol=lf
+*.js     text eol=lf
+*.jsx    text eol=lf
+*.json   text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+*.md     text eol=lf
+*.html   text eol=lf
+*.css    text eol=lf
+*.env    text eol=lf
+
+# ==========================================
+# 🧠 Binary / Model Files (do not diff)
+# ==========================================
+*.pt     binary
+*.weights binary
+*.onnx   binary
+*.pkl    binary
+*.joblib binary
+*.h5     binary
+*.ckpt   binary
+
+# ==========================================
+# 🎥 Media / Data Files
+# ==========================================
+*.mp4    binary
+*.avi    binary
+*.mov    binary
+*.mkv    binary
+*.jpg    binary
+*.jpeg   binary
+*.png    binary
+*.bmp    binary
+*.gif    binary
+
+# ==========================================
+# ⚡ Frontend Assets
+# ==========================================
+*.woff   binary
+*.woff2  binary
+*.ttf    binary
+*.ico    binary
+
+# ==========================================
+# 🧩 Git Large File Storage (optional)
+# Uncomment if using LFS for big models/videos
+# *.mp4 filter=lfs diff=lfs merge=lfs -text
+# *.pt filter=lfs diff=lfs merge=lfs -text
+# *.onnx filter=lfs diff=lfs merge=lfs -text

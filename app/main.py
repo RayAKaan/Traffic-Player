@@ -1,12 +1,11 @@
-# app/main.py
-
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from starlette.responses import FileResponse
 from starlette.middleware.trustedhost import TrustedHostMiddleware
+from pathlib import Path
 
-from app.routes.video import router as video_router  # Video upload + status routes
+from app.routes.video import router as video_router
 from app.database import create_db_and_tables
 
 app = FastAPI(
@@ -15,22 +14,26 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# ✅ TrustedHost (optional for security)
+# ------------------ Security & CORS ------------------
 app.add_middleware(
     TrustedHostMiddleware,
-    allowed_hosts=["*"]  # Replace with ["localhost", "127.0.0.1"] or domain in production
+    allowed_hosts=["*"]
 )
 
-# ✅ CORS (Frontend Integration)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Set your frontend domain in production
+    allow_origins=["*"],  # or ["http://localhost:8080"]
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"]
 )
 
-# ✅ Serve processed video files as static
+# ------------------ Paths ------------------
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
+VIDEO_DATA_DIR = PROJECT_ROOT / "SmarTSignalAI" / "data"
+
+# ------------------ Serve video files ------------------
 class CustomStaticFiles(StaticFiles):
     async def get_response(self, path, scope):
         response = await super().get_response(path, scope)
@@ -38,17 +41,18 @@ class CustomStaticFiles(StaticFiles):
             response.headers["Content-Type"] = "video/mp4"
         return response
 
-app.mount("/data", CustomStaticFiles(directory="SmarTSignalAI/data"), name="data")
+app.mount("/data", CustomStaticFiles(directory=VIDEO_DATA_DIR), name="data")
 
-# ✅ Register API routers
+# ✅ Only serve frontend in production
+if os.getenv("ENV", "dev") == "prod" and FRONTEND_DIST.exists():
+    app.mount("/", StaticFiles(directory=FRONTEND_DIST, html=True), name="frontend")
+else:
+    print("[DEV MODE] Frontend not served by backend. Run `npm run dev` separately.")
+
+# ------------------ API routers ------------------
 app.include_router(video_router, prefix="/api/video", tags=["Video Processing"])
 
-# ✅ Initialize database on startup
+# ------------------ Startup ------------------
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
-
-# ✅ Serve frontend files
-@app.get("/", include_in_schema=False)
-async def serve_frontend(request):
-    return FileResponse("SmarTSignalAI/frontend/dist/index.html")

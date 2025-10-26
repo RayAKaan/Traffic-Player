@@ -1,31 +1,81 @@
-# Ignore virtual environments and system files
+# ---- Python ----
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 *.swp
 *.log
+*.pid
+*.tmp
 
-# Python environment files
+# ---- Virtual Environments ----
 .venv/
 env/
 venv/
+ENV/
+env.bak/
 
-# VSCode config
+# ---- IDE / Editors ----
 .vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
 
-# Node modules (safe to ignore, can be reinstalled)
-frontend/node_modules/
-frontend/dist/
-frontend/.vite/
-
-# Byte-compiled
+# ---- Databases ----
 *.db
 *.sqlite3
 
-# Output folders
+# ---- Node / Frontend ----
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.next/
+frontend/build/
+*.lock
+
+# ---- ML / Model Files ----
+*.pt
+*.weights
+*.onnx
+*.h5
+*.pkl
+*.joblib
+*.ckpt
+
+# ---- Videos / Images ----
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.png
+*.jpg
+*.jpeg
+*.bmp
+*.gif
+
+# ---- Data directories ----
 data/raw/*
 data/processed/*
+!data/.gitkeep  # Keep folder structure in repo
 
-# Ignore MLflow logs (optional)
+# ---- MLflow logs ----
 mlruns/
+mlartifacts/
+
+# ---- Docker ----
+*.pid
+*.log
+*.tar
+docker-compose.override.yml
+
+# ---- OS / Misc ----
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ---- Temporary / Cache ----
+__cache__/
+.cache/
+.ipynb_checkpoints/
+node_modules/

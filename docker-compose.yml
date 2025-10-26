@@ -1,0 +1,47 @@
+services:
+  redis:
+    image: redis:alpine
+    container_name: smartsignal-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: smartsignal-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app   # Mount the entire project
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    depends_on:
+      - redis
+
+  frontend:
+    image: node:18
+    container_name: smartsignal-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.9.2
+    container_name: smartsignal-mlflow
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./mlruns:/mlruns
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri file:///mlruns
+    restart: unless-stopped
