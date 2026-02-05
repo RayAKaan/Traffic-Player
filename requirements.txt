@@ -10,6 +10,7 @@ loguru
 torch
 torchvision
 torchaudio
+transformers
 
 # Object Detection (YOLOv8)
 ultralytics
