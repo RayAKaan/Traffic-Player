@@ -44,6 +44,8 @@ SmarTSignalAI is a full-stack, AI-powered Traffic Management System designed to 
 <details>
 <summary><b>📦 Click to view project tree</b></summary>
 
+```bash
+  
 SmarTSignalAI/
 │
 ├── app/
@@ -103,7 +105,7 @@ SmarTSignalAI/
 ├── README.md
 └── .gitignore
 
-Copy code
+```
 
 </details>
 
